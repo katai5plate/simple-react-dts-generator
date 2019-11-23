@@ -26,7 +26,7 @@ module.exports = function (moduleName, dist) {
         function: function (k, v) { return v.toString(); },
         default: function (k, v) { return typeof v; }
     }), 2);
-    fs.writeFileSync(path.resolve(dist, moduleName + ".json"), ast);
+    // fs.writeFileSync(path.resolve(dist, `${moduleName}.json`), ast);
     var isFunction = function (x) { return !!x.match(/function/m) || !!x.match(/=>/m); };
     var isCamelCase = function (x) {
         return x.charAt(0) === x.charAt(0).toUpperCase() &&

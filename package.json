@@ -11,16 +11,19 @@
     "type": "git",
     "url": "git+https://github.com/katai5plate/simple-react-dts-generator.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "typescript",
+    "dts",
+    "react"
+  ],
+  "author": "katai5plate",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/katai5plate/simple-react-dts-generator/issues"
   },
   "homepage": "https://github.com/katai5plate/simple-react-dts-generator#readme",
   "dependencies": {
-    "json-stringify-safe": "^5.0.1",
-    "mykit-ts": "katai5plate/mykit-ts"
+    "json-stringify-safe": "^5.0.1"
   },
   "devDependencies": {
     "@types/json-stringify-safe": "^5.0.0",
