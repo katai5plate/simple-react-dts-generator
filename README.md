@@ -28,7 +28,7 @@ node -e "require('simple-react-dts-generator')('<module_name>', '<dist_dir>')"
 
 ## Logs
 
-### 1.0.0
+### 0.0.2
 
 - Operation check complete
 - Addition of explanation
