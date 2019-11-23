@@ -1,11 +1,12 @@
 {
   "name": "simple-react-dts-generator",
-  "version": "0.0.1",
-  "description": "Simple generation of React d.ts | React 対応の d.ts を簡易的に生成します",
+  "version": "1.0.0",
+  "description": "Simple generation of React d.ts",
   "main": "dist/index.js",
   "scripts": {
     "watch": "tsc -w",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",
