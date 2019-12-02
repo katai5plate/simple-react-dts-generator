@@ -34,7 +34,7 @@ var converter = {
     number: q("number"),
     bool: q("boolean"),
     object: q("object"),
-    func: q("function"),
+    func: q("Function"),
     any: q("any"),
     oneOfType: function (x) { return q(x, "union"); },
     arrayOf: function (x) { return q(x, "array"); },
@@ -52,7 +52,7 @@ var json2type = function (json) {
         .replace(/ , /g, ", ")
         .replace(/ :/g, ":");
 };
-var proptypesToJson = function (propTypesObject) {
+exports.proptypesToJson = function (propTypesObject) {
     return JSON.parse(JSON.stringify(propTypesObject), function (_, content) {
         if (content && typeof content === "object") {
             if (content.$$q || content instanceof Q) {
@@ -65,6 +65,18 @@ var proptypesToJson = function (propTypesObject) {
                                     .replace(/,/g, " | ")
                                     .replace(/:/g, ": ")
                                     .replace(/[\[\]]/g, "");
+                            }
+                            if (![
+                                "string",
+                                "number",
+                                "bigint",
+                                "boolean",
+                                "symbol",
+                                "undefined",
+                                "object",
+                                "function"
+                            ].includes(v)) {
+                                return v.replace(/"/g, "'");
                             }
                             return v;
                         });
@@ -87,82 +99,20 @@ var proptypesToJson = function (propTypesObject) {
 };
 // import * as PropTypes from "prop-types";
 // const data = {
-//   req: {
-//     node: PropTypes.node.isRequired,
-//     element: PropTypes.element.isRequired,
-//     elementType: PropTypes.elementType.isRequired,
-//     string: PropTypes.string.isRequired,
-//     number: PropTypes.number.isRequired,
-//     bool: PropTypes.bool.isRequired,
-//     object: PropTypes.object.isRequired,
-//     func: PropTypes.func.isRequired,
-//     any: PropTypes.any.isRequired,
-//     oneOfType: PropTypes.oneOfType([
-//       PropTypes.string.isRequired,
-//       PropTypes.number.isRequired
-//     ]),
-//     arrayOf: PropTypes.arrayOf(PropTypes.string.isRequired),
-//     oneOf: PropTypes.oneOf(["a", "b", "c"]),
-//     instanceOf: PropTypes.instanceOf(Date),
-//     shape: PropTypes.shape({
-//       x: PropTypes.string.isRequired,
-//       y: PropTypes.number.isRequired
-//     }),
-//     exact: PropTypes.exact({
-//       x: PropTypes.string.isRequired,
-//       y: PropTypes.shape({
-//         x: PropTypes.string.isRequired,
-//         y: PropTypes.number.isRequired
-//       })
-//     })
-//   },
-//   opt: {
-//     node: PropTypes.node,
-//     element: PropTypes.element,
-//     elementType: PropTypes.elementType,
-//     string: PropTypes.string,
-//     number: PropTypes.number,
-//     bool: PropTypes.bool,
-//     object: PropTypes.object,
-//     func: PropTypes.func,
-//     any: PropTypes.any,
-//     oneOfType: PropTypes.oneOfType([
-//       PropTypes.shape({
-//         x: PropTypes.string,
-//         y: PropTypes.number
-//       }),
-//       PropTypes.number
-//     ]),
-//     arrayOf: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         x: PropTypes.string,
-//         y: PropTypes.number
-//       })
-//     ),
-//     oneOf: PropTypes.oneOf(["a", "b", "c"]),
-//     instanceOf: PropTypes.instanceOf(Date),
-//     shape: PropTypes.shape({
-//       x: PropTypes.string,
-//       y: PropTypes.number
-//     }),
-//     exact: PropTypes.exact({
-//       x: PropTypes.string,
-//       y: PropTypes.shape({
-//         x: PropTypes.string,
-//         y: PropTypes.number
-//       })
-//     })
-//   }
+//   x: PropTypes.shape({
+//     field: PropTypes.string,
+//     order: PropTypes.oneOf(["ASC", "DESC"])
+//   })
 // };
 exports.parser = function (propTypesObject) {
-    var json = proptypesToJson(propTypesObject);
+    var json = exports.proptypesToJson(propTypesObject);
     return "{" + Object.entries(json)
         .map(function (_a) {
         var k = _a[0], v = _a[1];
         return k + ": " + v;
     })
-        .join("; ") + "}";
+        .join(", ") + "}";
 };
-// console.log("req", parser(data.req));
+// console.log("req", parser(data));
 // console.log("opt", parser(data.opt));
 //# sourceMappingURL=propTypes.js.map
